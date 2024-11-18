@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     public function run($parameters = [])
     {
         $this->call(RoleSeeder::class, false, ['parameters' => $parameters]);
-        $this->call(UserSeeder::class, false, ['parameters' => $parameters]);
+        //$this->call(UserSeeder::class, false, ['parameters' => $parameters]);
     }
 }
