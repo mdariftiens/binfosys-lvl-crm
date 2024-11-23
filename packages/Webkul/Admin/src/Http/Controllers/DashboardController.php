@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers;
 
 use Webkul\Admin\Helpers\Dashboard;
+use Webkul\Admin\Helpers\SecondLayerConnection;
 
 class DashboardController extends Controller
 {
@@ -22,23 +23,17 @@ class DashboardController extends Controller
         'open-leads-by-states' => 'getOpenLeadsByStates',
     ];
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(protected Dashboard $dashboardHelper) {}
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Dashboard $dashboardHelper)
     {
         return view('admin::dashboard.index')->with([
-            'startDate' => $this->dashboardHelper->getStartDate(),
-            'endDate'   => $this->dashboardHelper->getEndDate(),
+            'startDate' => $dashboardHelper->getStartDate(),
+            'endDate'   => $dashboardHelper->getEndDate(),
         ]);
     }
 
@@ -47,13 +42,13 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function stats()
+    public function stats(Dashboard $dashboardHelper)
     {
-        $stats = $this->dashboardHelper->{$this->typeFunctions[request()->query('type')]}();
+        $stats = $dashboardHelper->{$this->typeFunctions[request()->query('type')]}();
 
         return response()->json([
             'statistics' => $stats,
-            'date_range' => $this->dashboardHelper->getDateRange(),
+            'date_range' => $dashboardHelper->getDateRange(),
         ]);
     }
 }
