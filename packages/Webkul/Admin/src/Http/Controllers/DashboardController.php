@@ -3,7 +3,7 @@
 namespace Webkul\Admin\Http\Controllers;
 
 use Webkul\Admin\Helpers\Dashboard;
-use Webkul\Admin\Helpers\SecondLayerConnection;
+
 
 class DashboardController extends Controller
 {

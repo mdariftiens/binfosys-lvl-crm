@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\SecondLayerConnection;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
