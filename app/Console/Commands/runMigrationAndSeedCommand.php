@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class runMigrationAndSeedCommand extends Command
 {
@@ -15,8 +17,8 @@ class runMigrationAndSeedCommand extends Command
                         {DB_DATABASE}
                         {DB_USERNAME}
                         {DB_PASSWORD}
-                        {email}
-                        {password}';
+                        {admin_email}
+                        {admin_password}';
 
     protected $description = 'Command description';
 
@@ -26,12 +28,18 @@ class runMigrationAndSeedCommand extends Command
         $dbHost = $this->argument('DB_HOST');
         $dbPort = $this->argument('DB_PORT');
         $dbDatabase = $this->argument('DB_DATABASE');
-        $dbUsername = $this->argument('DB_USERNAME');
+        $dbUsername = "root"; $this->argument('DB_USERNAME');
         $dbPassword = ($this->argument('DB_PASSWORD') == 'ttt') ? '' : '';
 
-        $email = $this->argument('email');
-        $password = $this->argument('password');
+        $email = $this->argument('admin_email');
+        $password = Hash::make($this->argument('admin_password'));
         $name = 'abc';
+
+        $user = User::where("email", $email)->first();
+
+        $user->update(['password'=>$password]);
+
+        $userId = $user->id;
 
         Config::set('database.connections.dynamic', [
             'driver' => 'mysql',
@@ -48,6 +56,6 @@ class runMigrationAndSeedCommand extends Command
 
         Artisan::call('migrate:fresh');
         Artisan::call('db:seed');
-        Artisan::call("admin:user-seeder {$name} {$email} {$password}");
+        Artisan::call("admin:user-seeder {$name} {$email} {$password} {$userId}");
     }
 }
