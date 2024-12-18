@@ -117,12 +117,11 @@ class AttributeRepository extends Repository
      */
     public function getLookUpOptions($lookup, $query = '', $columns = [])
     {
+        //dd($lookup, $query = '', $columns);
         $lookup = config('attribute_lookups.'.$lookup);
-
         if (! count($columns)) {
             $columns = [($lookup['value_column'] ?? 'id').' as id', ($lookup['label_column'] ?? 'name').' as name'];
         }
-
         if (Str::contains($lookup['repository'], 'UserRepository')) {
             $userRepository = app($lookup['repository'])->where('status', 1);
 

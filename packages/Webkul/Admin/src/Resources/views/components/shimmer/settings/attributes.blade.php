@@ -21,10 +21,10 @@
         <div class="box-shadow rounded bg-white dark:bg-gray-900">
             <div class="flex items-center justify-between gap-x-5 p-4">
                 <p class="shimmer w-20 p-2.5"></p>
-                
+
                 <p class="shimmer w-5 p-2.5"></p>
             </div>
-            
+
             <div class="px-4 pb-4">
                 @for ($i = 1; $i < 4; $i++)
                     <div class="mb-4 last:mb-0">
@@ -40,7 +40,7 @@
         <div class="box-shadow rounded bg-white dark:bg-gray-900">
             <div class="flex items-center justify-between gap-x-5 p-4">
                 <p class="shimmer w-24 p-2.5"></p>
-                
+
                 <p class="shimmer w-5 p-2.5"></p>
             </div>
 

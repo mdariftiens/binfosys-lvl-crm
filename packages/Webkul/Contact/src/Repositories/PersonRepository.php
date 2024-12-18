@@ -3,6 +3,7 @@
 namespace Webkul\Contact\Repositories;
 
 use Illuminate\Container\Container;
+use Webkul\Attribute\Models\Category;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Contracts\Person;
@@ -59,7 +60,9 @@ class PersonRepository extends Repository
         }
 
         $person = parent::create($data);
-
+        if (isset($data['category_id'])){
+            $person->categories()->attach($data['category_id']);
+        }
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $person->id,
         ]));

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
+use Webkul\Attribute\Models\Category;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
@@ -96,5 +97,9 @@ class Person extends Model implements PersonContract
     protected static function newFactory()
     {
         return PersonFactory::new();
+    }
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'person_category', 'person_id', 'category_id');
     }
 }
