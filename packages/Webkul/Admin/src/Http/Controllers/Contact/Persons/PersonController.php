@@ -53,7 +53,7 @@ class PersonController extends Controller
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.person.create.before');
-
+        //dd($this->sanitizeRequestedPersonData($request->all()));
         $person = $this->personRepository->create($this->sanitizeRequestedPersonData($request->all()));
 
         Event::dispatch('contacts.person.create.after', $person);

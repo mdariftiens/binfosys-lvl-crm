@@ -5,7 +5,7 @@
     </x-slot>
 
     {!! view_render_event('admin.persons.create.form.before') !!}
-    
+
     <!--Create Page Form -->
     <x-admin::form
         :action="route('admin.contacts.persons.store')"
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Form fields -->
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.persons.create.form_controls.before') !!}
@@ -55,7 +55,7 @@
                         'entity_type' => 'persons',
                     ])"
                 />
-                
+
                 {!! view_render_event('admin.persons.create.form_controls.after') !!}
             </div>
         </div>

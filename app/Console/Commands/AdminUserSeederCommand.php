@@ -21,7 +21,7 @@ class AdminUserSeederCommand extends Command
 
 
         DB::table('users')->insert([
-            'id'              => 1,
+            'id'              => $userId,
             'name'            => $name,
             'email'           => $email,
             'password'        => $password, // password is hashed in parent command
