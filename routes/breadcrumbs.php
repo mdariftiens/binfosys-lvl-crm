@@ -38,6 +38,18 @@ Breadcrumbs::for('quotes', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.quotes'), route('admin.quotes.index'));
 });
 
+// Dashboard > Campaign
+Breadcrumbs::for('campaign', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('campaign::app.campaign.index.title'), route('admin.quotes.index'));
+});
+
+// Dashboard > Campaign > Create
+Breadcrumbs::for('campaign.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('campaign');
+    $trail->push(trans('campaign::app.campaign.create.title'), route('admin.campaign.create'));
+});
+
 // Dashboard > Quotes > Add Quote
 Breadcrumbs::for('quotes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('quotes');
