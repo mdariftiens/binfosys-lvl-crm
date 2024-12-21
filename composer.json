@@ -70,7 +70,8 @@
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\Campaign\\": "packages/Webkul/Campaign/src"
         }
     },
     "autoload-dev": {

@@ -1,0 +1,28 @@
+{
+    "name": "krayin/laravel-campaign",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Md. Arif Bin A. Aziz",
+            "email": "md.arif.tiens@gmail.com"
+        }
+    ],
+    "require": {
+        "krayin/laravel-attribute": "^1.0",
+        "krayin/laravel-core": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Campaign\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Campaign\\Providers\\CampaignServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}
