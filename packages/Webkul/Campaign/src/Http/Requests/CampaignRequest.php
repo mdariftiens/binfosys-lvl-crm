@@ -11,7 +11,7 @@ class CampaignRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,14 +22,14 @@ class CampaignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['require',"max:255"],
-            'type'=>['require'],
-            'description'=>['nullable'],
-            'message'=>['required'],
-            'status'=>['required'],
-            'start_date'=>['required','date'],
-            'end_date'=>['required','date'],
-            'package_id'=>['required','integer'],
+            'name' => ['required', 'max:255'],
+            'type' => ['required'],
+            'description' => ['nullable'],
+            'message' => ['required'],
+            'status' => ['required'],
+            'start_date' => ['required', 'date', 'after:yesterday'],
+            'end_date' => ['required', 'date', 'after:yesterday'],
+            'package_id' => ['required', 'integer'],
         ];
     }
 }

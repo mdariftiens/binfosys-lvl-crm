@@ -7,10 +7,18 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Webkul\Campaign\Http\Requests\CampaignRequest;
+use Webkul\Campaign\Repositories\CampaignRepository;
 
 class CampaignController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public CampaignRepository $campaignRepository;
+
+    public function __construct(CampaignRepository $campaignRepository)
+    {
+        $this->campaignRepository = $campaignRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -39,7 +47,12 @@ class CampaignController extends Controller
      */
     public function store(CampaignRequest $request)
     {
-        
+        $this->campaignRepository->create($request->validated());
+
+        return back()->with([
+            'status'=>'success',
+            'message'=>'Campaign Created successfully'
+        ]);
     }
 
     /**

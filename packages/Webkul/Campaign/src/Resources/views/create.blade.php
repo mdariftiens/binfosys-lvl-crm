@@ -3,8 +3,12 @@
         @lang('campaign::app.campaign.index.title')
         </x-slot>
 
-        <form action="{{route("admin.campaign.save")}}" method="post">
+        <form action="{{route("admin.campaign.store")}}" method="post">
+
+            @csrf
             <div class="flex flex-col gap-4">
+
+
                 <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <div class="flex flex-col gap-2">
                         <div class="flex cursor-pointer items-center">
@@ -32,6 +36,17 @@
 
                 <div class="w-1/2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
 
+                        @if (session('status') && session('message'))
+                            @if (session('status') == 'success')
+                                <div class="alert alert-success">
+                                    <strong>Success!</strong> {{ session('message') }}
+                                </div>
+                            @elseif (session('status') == 'error')
+                                <div class="alert alert-danger">
+                                    <strong>Error!</strong> {{ session('message') }}
+                                </div>
+                            @endif
+                        @endif
 
                         {{--        name            --}}
                         <x-admin::form.control-group class="!mb-0">
@@ -45,13 +60,12 @@
                                 rules="required"
                                 :label="trans('campaign::app.campaign.create.name')"
                             />
-
-                            <x-admin::form.control-group.error control-name="comment" />
+                            <x-c-error name="name"/>
                         </x-admin::form.control-group>
 
                         {{--        Description            --}}
                         <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label >
                                 @lang('campaign::app.campaign.create.description')
                             </x-admin::form.control-group.label>
 
@@ -61,7 +75,7 @@
                                 :label="trans('campaign::app.campaign.create.description')"
                             />
 
-                            <x-admin::form.control-group.error control-name="comment" />
+                            <x-c-error name="description"/>
                         </x-admin::form.control-group>
 
                         {{--        type            --}}
@@ -87,7 +101,7 @@
 
                             </x-admin::form.control-group.control>
 
-                            <x-admin::form.control-group.error control-name="permission_type" />
+                            <x-c-error name="type"/>
                         </x-admin::form.control-group>
 
 
@@ -103,7 +117,7 @@
                                 :label="trans('campaign::app.campaign.create.message')"
                             />
 
-                            <x-admin::form.control-group.error control-name="comment" />
+                            <x-c-error name="message"/>
                         </x-admin::form.control-group>
 
 
@@ -122,15 +136,16 @@
                                 :placeholder="trans('campaign::app.campaign.create.status_description')"
                             >
 
-                                @foreach (\Webkul\Campaign\Enums\CampaignStatus::toArray() as $key=>$user)
-                                    <option value="{{ $key }}">
+                                @foreach (\Webkul\Campaign\Enums\CampaignStatus::toArray() as $key=>$value)
+                                    <option value="{{ $value }}">
                                         @lang('campaign::app.campaign.status.'.$key)
                                     </option>
                                 @endforeach
 
                             </x-admin::form.control-group.control>
 
-                            <x-admin::form.control-group.error control-name="permission_type" />
+                            <x-c-error name="status"/>
+
                         </x-admin::form.control-group>
 
 
@@ -150,7 +165,8 @@
                                 :placeholder="trans('campaign::app.campaign.create.start_date_description')"
                             > </x-admin::form.control-group.control>
 
-                            <x-admin::form.control-group.error control-name="permission_type" />
+                            <x-c-error name="start_date"/>
+
                         </x-admin::form.control-group>
 
                         {{--        end_date            --}}
@@ -161,19 +177,33 @@
 
                             <x-admin::form.control-group.control
                                 type="date"
-                                name="start_date"
-                                id="start_date"
+                                name="end_date"
+                                id="end_date"
                                 rules="required"
                                 :label="trans('campaign::app.campaign.create.end_date')"
                                 :placeholder="trans('campaign::app.campaign.create.end_date_description')"
                             > </x-admin::form.control-group.control>
 
-                            <x-admin::form.control-group.error control-name="permission_type" />
+                            <x-c-error name="end_date"/>
                         </x-admin::form.control-group>
 
-                        <br>
+                        <input type="hidden" name="package_id" value="1">
 
+                        {{--        budget            --}}
+                        <x-admin::form.control-group class="!mb-0">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('campaign::app.campaign.create.budget')
+                            </x-admin::form.control-group.label>
 
+                            <x-admin::form.control-group.control
+                                type="number"
+                                name="budget"
+                                value="0"
+                                rules="required"
+                                :label="trans('campaign::app.campaign.create.budget')"
+                            />
+                            <x-c-error name="name"/>
+                        </x-admin::form.control-group>
 
                 </div>
             </div>
