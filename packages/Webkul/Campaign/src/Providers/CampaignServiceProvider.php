@@ -2,8 +2,11 @@
 
 namespace Webkul\Campaign\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+use Webkul\Campaign\View\Components\CustomError;
 
 class CampaignServiceProvider extends ServiceProvider
 {
@@ -16,7 +19,8 @@ class CampaignServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
-        $this->loadRoutesFrom(__DIR__ . '/../Http/routes.php');
+        Route::middleware(['web','SecondLayerConnection', 'admin_locale', 'user',])
+            ->group(__DIR__.'/../Http/routes.php');
 
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'campaign');
 
@@ -29,6 +33,9 @@ class CampaignServiceProvider extends ServiceProvider
         Event::listen('admin.layout.head', function($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('campaign::layouts.style');
         });
+
+        Blade::component('c-error', CustomError::class);
+
     }
 
     /**
