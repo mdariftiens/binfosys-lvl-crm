@@ -8,7 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Campaign\DataGrids\PersonDataGrid;
 use Webkul\Campaign\Http\Requests\CampaignRequest;
@@ -83,6 +85,19 @@ class CampaignController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $campaign = Campaign::findOrFail($id);
+        if (isset($campaign->package_id) && $campaign->package_id != $request->package_id) {
+            $data = json_encode([
+                'package_id' => $request->package_id,
+                'company_id' => Auth::id(),
+                'campain_id' => $campaign->id
+            ]);
+            $oldKey = "campaign_".Auth::id()."_".$id."_".$campaign->package_id;
+            $newKey = "campaign_".Auth::id()."_".$campaign->id."_".$request->package_id;
+            Redis::del($oldKey);
+            Redis::set($newKey, $data);
+        }
         Campaign::where('id', $id)->update($request->except('_token'));
         session()->flash('success', trans('admin::app.products.index.update-success'));
         return redirect()->route('admin.campaign.index');
