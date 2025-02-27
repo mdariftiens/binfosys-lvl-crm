@@ -19,12 +19,13 @@ class CampaignRepository
         $campaign = Campaign::create($fields);
         if ($campaign){
             $data = json_encode([
-                'package_id' => $fields['package_id'],
-                'company_id' => Auth::id(),
-                'campain_id' => $campaign->id
+                'packageId' => $fields['package_id'],
+                'companyId' => Auth::id(),
+                'campainId' => $campaign->id
             ]);
             $key = "campaign_".Auth::id()."_".$campaign->id."_".$fields['package_id'];
-            Redis::set($key, $data);
+            //Redis::set($key, $data);
+            Redis::publish('sms_queue', $data);
         }
 
 //        ManageCampaignEvent::dispatch($campaign,__FUNCTION__);
